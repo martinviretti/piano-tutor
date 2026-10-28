@@ -1,0 +1,10 @@
+# Audio descargado de YouTube (se regenera)
+cache/
+
+# yt-dlp se descarga solo al arrancar el servidor
+bin/
+
+node_modules/
+*.log
+.DS_Store
+Thumbs.db

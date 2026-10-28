@@ -1,0 +1,10 @@
+{
+  "name": "piano-tutor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aprendé canciones en el piano nota a nota a partir de un video de YouTube",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

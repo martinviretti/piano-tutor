@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Piano Tutor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Piano Tutor</span>
+    </div>
+    <form id="url-form" class="url-form" autocomplete="off">
+      <input id="url-input" type="text" placeholder="Pegá el link de YouTube de la canción" spellcheck="false" />
+      <button type="submit" class="btn primary">Cargar</button>
+      <label class="btn ghost file-btn" title="Subir un archivo de audio o video">
+        Subir archivo
+        <input id="file-input" type="file" accept="audio/*,video/*" hidden />
+      </label>
+    </form>
+  </header>
+
+  <main>
+    <section id="welcome" class="welcome">
+      <h1>Aprendé una canción nota a nota</h1>
+      <p>Pegá un link de YouTube arriba. La app saca las notas con IA y te las muestra en el piano de a una, de a tres o de a las que quieras.</p>
+      <p class="hint">Funciona mejor con videos de <strong>piano solo</strong> (tutoriales, covers). Con banda completa la IA mezcla instrumentos.</p>
+      <div id="recent-wrap" class="recent-wrap" hidden>
+        <h2>Canciones guardadas</h2>
+        <ul id="recent-list" class="recent-list"></ul>
+      </div>
+    </section>
+
+    <section id="song" class="song" hidden>
+      <div class="song-top">
+        <div class="video-col">
+          <div class="video-frame"><div id="yt-player"></div></div>
+          <audio id="file-audio" controls hidden></audio>
+        </div>
+
+        <div class="side-col">
+          <h2 id="song-title" class="song-title"></h2>
+
+          <div id="source-panel" class="panel">
+            <p class="panel-label">Sacar las notas</p>
+            <div class="source-actions">
+              <button id="btn-download" class="btn primary" type="button">Descargar audio y transcribir</button>
+              <button id="btn-capture" class="btn" type="button">Escuchar el video y transcribir</button>
+            </div>
+            <p class="hint small" id="source-hint">
+              Si la descarga falla, usá <em>Escuchar el video</em>: el navegador te va a pedir compartir esta pestaña.
+              Elegí <strong>esta pestaña</strong> y dejá marcado <strong>"Compartir audio"</strong>. Tarda lo que dura el video.
+            </p>
+          </div>
+
+          <div id="status" class="status" hidden>
+            <div class="status-row">
+              <span id="status-text"></span>
+              <button id="btn-stop-capture" class="btn small" type="button" hidden>Terminar acá</button>
+            </div>
+            <div class="bar"><div id="status-bar"></div></div>
+          </div>
+
+          <div id="settings" class="panel settings" hidden>
+            <label>Qué tocar
+              <select id="opt-mode">
+                <option value="melody">Solo melodía</option>
+                <option value="right">Melodía + acordes (mano derecha)</option>
+                <option value="all">Todas las notas</option>
+              </select>
+            </label>
+            <label>Notas por paso
+              <select id="opt-group">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+              </select>
+            </label>
+            <label>Sensibilidad <span id="sens-val" class="val"></span>
+              <input id="opt-sens" type="range" min="1" max="10" step="1" />
+            </label>
+            <label>Velocidad <span id="speed-val" class="val"></span>
+              <input id="opt-speed" type="range" min="0.25" max="1.5" step="0.25" />
+            </label>
+            <label>Nombres
+              <select id="opt-names">
+                <option value="es">Do Re Mi</option>
+                <option value="en">C D E</option>
+              </select>
+            </label>
+            <label class="check"><input id="opt-autoplay" type="checkbox" /> Sonar al avanzar</label>
+            <label class="check"><input id="opt-labels" type="checkbox" /> Nombres en todas las teclas</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="practice" class="practice" hidden>
+        <div class="practice-head">
+          <div class="step-info">
+            <span id="step-count" class="step-count"></span>
+            <span id="step-time" class="step-time"></span>
+          </div>
+          <div id="now-notes" class="now-notes" aria-live="polite"></div>
+          <div class="nav">
+            <button id="btn-prev" class="btn" type="button" title="Anterior (←)">&#9664; Anterior</button>
+            <button id="btn-play" class="btn" type="button" title="Escuchar (R)">Escuchar</button>
+            <button id="btn-orig" class="btn" type="button" title="Escuchar el original (O)">Original</button>
+            <button id="btn-next" class="btn primary" type="button" title="Siguiente (Espacio o →)">Siguiente &#9654;</button>
+          </div>
+        </div>
+        <div class="progress"><div id="progress-bar"></div></div>
+
+        <div id="piano" class="piano" aria-label="Teclado"></div>
+
+        <div class="legend">
+          <span><i class="sw now"></i> Tocá ahora (en el orden del número)</span>
+          <span><i class="sw next"></i> Lo que viene</span>
+          <span class="keys-help">Espacio/→ siguiente · ← anterior · R escuchar · O original · 1-8 notas por paso</span>
+        </div>
+
+        <div id="strip" class="strip"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
